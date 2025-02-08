@@ -1,3 +1,8 @@
+ros2_dep = dependency('rosidl_default_runtime', required: true)
+rclcpp_dep = dependency('rclcpp', required: true)
+sensor_msgs_dep = dependency('sensor_msgs', required: true)
+image_transport_dep = dependency('image_transport', required: true)
+
 rpicam_still = executable('rpicam-still', files('rpicam_still.cpp'),
                           include_directories : include_directories('..'),
                           dependencies: [libcamera_dep, boost_dep],
@@ -25,6 +30,18 @@ rpicam_raw = executable('rpicam-raw', files('rpicam_raw.cpp'),
 rpicam_jpeg = executable('rpicam-jpeg', files('rpicam_jpeg.cpp'),
                          include_directories : include_directories('..'),
                          dependencies: [libcamera_dep, boost_dep],
+                         link_with : rpicam_app,
+                         install : true)
+
+rpicam_ros2_vf = executable('rpicam-ros2-vf', files('rpicam_ros2_vf.cpp'),
+                            include_directories : include_directories('..'),
+                            dependencies: [libcamera_dep, boost_dep, ros2_dep, rclcpp_dep, sensor_msgs_dep, image_transport_dep],
+                            link_with : rpicam_app,
+                            install : true)
+
+rpicam_ros2 = executable('rpicam-ros2', files('rpicam_ros2.cpp'),
+                         include_directories : include_directories('..'),
+                         dependencies: [libcamera_dep, boost_dep, ros2_dep, rclcpp_dep, sensor_msgs_dep, image_transport_dep],
                          link_with : rpicam_app,
                          install : true)
 
