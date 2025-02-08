@@ -42,9 +42,9 @@ public:
 		double framerate = options->framerate.value_or(30.0);
 		int timer_interval_ms = static_cast<int>(1000.0 / framerate);
 
-		event_loop(); // Start the event loop without a timer
-		// timer_ = this->create_wall_timer(std::chrono::milliseconds(timer_interval_ms), 
-		// 								std::bind(&LibcameraRawNode::event_loop, this));
+		// event_loop(); // Start the event loop without a timer
+		timer_ = this->create_wall_timer(std::chrono::milliseconds(timer_interval_ms), 
+										std::bind(&LibcameraRawNode::event_loop, this));
 	}
 
 private:
